@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,json,html,css,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:staged": "lint-staged"
   },
   "lint-staged": {
     "*.js": [

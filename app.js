@@ -1,16 +1,12 @@
-//Document is the DOM can be accessed in the console with document.window.
-// Tree is from the top, html, body, p etc.
+/**
+ * TODO-list application
+ */
 
-//Problem: User interaction does not provide the correct results.
-//Solution: Add interactivity so the user can manage daily tasks.
-//Break things down into smaller steps and take each step at a time.
-
-// Event handling, user interaction is what starts the code execution.
-
+// Add Task form selectors
 const createTaskInput = document.getElementById('new-task');
-const addButton = document.getElementsByTagName('button')[0]; //first button
-const todoTasksList = document.getElementById('incompleteTasks'); //ul of #incompleteTasks
-const completedTasksList = document.getElementById('completed-tasks'); //completed-tasks
+const addButton = document.getElementsByTagName('button')[0];
+const todoTasksList = document.getElementById('incompleteTasks');
+const completedTasksList = document.getElementById('completed-tasks');
 
 //New task list item
 const createNewTaskElement = function (taskString) {
@@ -37,7 +33,7 @@ const createNewTaskElement = function (taskString) {
   editInput.type = 'text';
   editInput.className = 'task';
 
-  editButton.innerText = 'Edit'; //innerText encodes special characters, HTML does not.
+  editButton.innerText = 'Edit';
   editButton.className = 'edit';
 
   deleteButton.className = 'delete';
@@ -53,9 +49,14 @@ const createNewTaskElement = function (taskString) {
   return listItem;
 };
 
+//
+// HANDLERS
+//
+
 const addTask = function () {
-  //Create a new list item with the text from the #new-task:
+  //Prevent creation of empty tasks
   if (!createTaskInput.value) return;
+  //Create a new list item with the text from the #new-task:
   const listItem = createNewTaskElement(createTaskInput.value);
 
   todoTasksList.appendChild(listItem);
@@ -64,11 +65,7 @@ const addTask = function () {
   createTaskInput.value = '';
 };
 
-//
-// HANDLERS
-//
-
-//Edit an existing task.
+// Editing an existing task.
 const editTask = function () {
   const listItem = this.parentNode;
 
@@ -91,7 +88,7 @@ const editTask = function () {
   listItem.classList.toggle('editMode');
 };
 
-//Delete task.
+// Delete task.
 const deleteTask = function () {
   const listItem = this.parentNode;
   const ul = listItem.parentNode;
@@ -110,10 +107,6 @@ const handleTaskStateChange = function () {
   checkBox.onchange = handleTaskStateChange;
 };
 
-// BINDINGS
-
-addButton.addEventListener('click', addTask);
-
 const bindTaskEvents = function (taskListItem) {
   //select ListItems children
   const checkBox = taskListItem.querySelector('input[type=checkbox]');
@@ -128,16 +121,9 @@ const bindTaskEvents = function (taskListItem) {
   checkBox.onchange = handleTaskStateChange;
 };
 
-for (let i = 0; i < todoTasksList.children.length; i++) {
-  bindTaskEvents(todoTasksList.children[i]);
-}
+// BINDINGS
 
-for (let i = 0; i < completedTasksList.children.length; i++) {
-  bindTaskEvents(completedTasksList.children[i]);
-}
+addButton.addEventListener('click', addTask);
 
-// Issues with usability don't get seen until they are in front of a human tester.
-
-//prevent creation of empty tasks.
-
-//Change edit to save when you are in edit mode.
+Array.from(todoTasksList.children).forEach((item) => bindTaskEvents(item));
+Array.from(completedTasksList.children).forEach((item) => bindTaskEvents(item));

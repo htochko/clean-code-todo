@@ -20,8 +20,35 @@ export default [
       'no-var': 'error',
       'prefer-const': 'error',
       'no-unused-vars': 'error',
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
+      semi: ['error', 'always'],
+      quotes: ['error', 'single'],
+      'no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          argsIgnorePattern: '^_', // Разрешает неиспользуемые аргументы, начинающиеся с "_"
+        },
+      ],
+
+      // 2. Детект недостижимого кода (например, код после return/throw/break)
+      'no-unreachable': 'error',
+
+      // 3. Детект неиспользованных выражений (например, вызов без присваивания/эффекта)
+      'no-unused-expressions': 'error',
+
+      // 4. Поиск неиспользуемых меток (labels)
+      'no-unused-labels': 'error',
+
+      // 5. Поиск лишних/бесполезных вызовов и блоков
+      'no-lone-blocks': 'error', // Бесполезные изолированные блоки {}
+      'no-useless-catch': 'error', // Catch-блоки, которые просто пробрасывают ошибку дальше
+      'no-useless-return': 'error', // Избыточные return в конце функций
+
+      // 6. Правила unicorn для чистки мертвого/избыточного кода
+      'unicorn/no-unreadable-array-destructuring': 'error',
+      'unicorn/no-zero-fractions': 'error',
     },
   },
 ];

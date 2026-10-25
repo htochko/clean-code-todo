@@ -106,17 +106,11 @@ const handleTaskStateChange = function () {
 };
 
 const bindTaskEvents = function (taskListItem) {
-  //select ListItems children
-  const checkBox = taskListItem.querySelector('input[type=checkbox]');
-  const editButton = taskListItem.querySelector('button.edit');
-  const deleteButton = taskListItem.querySelector('button.delete');
-
-  //Bind editTask to edit button.
-  editButton.onclick = editTask;
-  //Bind deleteTask to delete button.
-  deleteButton.onclick = deleteTask;
-  //Bind taskCompleted to handleTaskStateChange.
-  checkBox.onchange = handleTaskStateChange;
+  taskListItem
+    .querySelector('input[type=checkbox]')
+    .addEventListener('change', handleTaskStateChange);
+  taskListItem.querySelector('button.edit').addEventListener('click', editTask);
+  taskListItem.querySelector('button.delete').addEventListener('click', deleteTask);
 };
 
 // BINDINGS

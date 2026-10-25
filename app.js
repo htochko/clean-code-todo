@@ -4,7 +4,7 @@
 
 // Add Task form selectors
 const createTaskInput = document.getElementById('new-task');
-const addButton = document.getElementsByTagName('button')[0];
+const addButton = document.querySelector('button[data-control-add-task]');
 const todoTasksList = document.getElementById('incompleteTasks');
 const completedTasksList = document.getElementById('completed-tasks');
 

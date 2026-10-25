@@ -17,6 +17,8 @@ export default [
       'unicorn/prefer-node-protocol': 'error',
       'unicorn/prefer-module': 'error',
       'no-console': 'warn',
+      'no-var': 'error',
+      'prefer-const': 'error',
       'no-unused-vars': 'error',
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],

@@ -65,7 +65,7 @@ const addTask = function () {
 
 // Editing an existing task.
 const editTask = function () {
-  const listItem = this.closest('li');
+  const listItem = this.parentNode;
 
   const editInput = listItem.querySelector('input[type=text]');
   const label = listItem.querySelector('label');
@@ -88,7 +88,7 @@ const editTask = function () {
 
 // Delete task.
 const deleteTask = function () {
-  this.closest('ul')?.removeChild(listItem);
+  this.closest('ul')?.removeChild(this.closest('li'));
 };
 
 const handleTaskStateChange = function () {

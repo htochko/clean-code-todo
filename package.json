@@ -1,0 +1,32 @@
+{
+  "name": "clean-code-todo",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,json,html,css,md}\"",
+    "prepare": "husky",
+    "lint:staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,html,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "allowScripts": {
+    "husky": true
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.3.0"
+  }
+}

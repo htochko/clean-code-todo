@@ -7,10 +7,10 @@
 
 // Event handling, user interaction is what starts the code execution.
 
-const taskInput = document.getElementById('new-task'); //Add a new task.
+const createTaskInput = document.getElementById('new-task');
 const addButton = document.getElementsByTagName('button')[0]; //first button
-const incompleteTaskHolder = document.getElementById('incompleteTasks'); //ul of #incompleteTasks
-const completedTasksHolder = document.getElementById('completed-tasks'); //completed-tasks
+const todoTasksList = document.getElementById('incompleteTasks'); //ul of #incompleteTasks
+const completedTasksList = document.getElementById('completed-tasks'); //completed-tasks
 
 //New task list item
 const createNewTaskElement = function (taskString) {
@@ -55,18 +55,20 @@ const createNewTaskElement = function (taskString) {
 
 const addTask = function () {
   //Create a new list item with the text from the #new-task:
-  if (!taskInput.value) return;
-  const listItem = createNewTaskElement(taskInput.value);
+  if (!createTaskInput.value) return;
+  const listItem = createNewTaskElement(createTaskInput.value);
 
-  //Append listItem to incompleteTaskHolder
-  incompleteTaskHolder.appendChild(listItem);
+  todoTasksList.appendChild(listItem);
   bindTaskEvents(listItem, handleTaskStateChange);
 
-  taskInput.value = '';
+  createTaskInput.value = '';
 };
 
-//Edit an existing task.
+//
+// HANDLERS
+//
 
+//Edit an existing task.
 const editTask = function () {
   const listItem = this.parentNode;
 
@@ -97,8 +99,19 @@ const deleteTask = function () {
   ul.removeChild(listItem);
 };
 
-//Set the click handler to the addTask function.
-addButton.onclick = addTask;
+const handleTaskStateChange = function () {
+  const listItem = this.parentNode;
+  const isCompleted = completedTasksList.contains(listItem);
+
+  const targetList = isCompleted ? todoTasksList : completedTasksList;
+  targetList.appendChild(listItem);
+
+  const checkBox = listItem.querySelector('input[type=checkbox]');
+  checkBox.onchange = handleTaskStateChange;
+};
+
+// BINDINGS
+
 addButton.addEventListener('click', addTask);
 
 const bindTaskEvents = function (taskListItem) {
@@ -115,31 +128,13 @@ const bindTaskEvents = function (taskListItem) {
   checkBox.onchange = handleTaskStateChange;
 };
 
-//cycle over incompleteTaskHolder ul list items
-//for each list item
-for (let i = 0; i < incompleteTaskHolder.children.length; i++) {
-  //bind events to list items chldren(tasksCompleted)
-  bindTaskEvents(incompleteTaskHolder.children[i], taskCompleted);
+for (let i = 0; i < todoTasksList.children.length; i++) {
+  bindTaskEvents(todoTasksList.children[i]);
 }
 
-//cycle over completedTasksHolder ul list items
-for (let i = 0; i < completedTasksHolder.children.length; i++) {
-  //bind events to list items chldren(tasksIncompleted)
-  bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
+for (let i = 0; i < completedTasksList.children.length; i++) {
+  bindTaskEvents(completedTasksList.children[i]);
 }
-
-const handleTaskStateChange = function () {
-  const listItem = this.parentNode;
-  const isCompleted = completedTasksHolder.contains(listItem);
-
-  // move element to opposite list
-  const targetHolder = isCompleted ? incompleteTaskHolder : completedTasksHolder;
-  targetHolder.appendChild(listItem);
-
-  // toggle handler
-  const checkBox = listItem.querySelector('input[type=checkbox]');
-  checkBox.onchange = handleTaskStateChange;
-};
 
 // Issues with usability don't get seen until they are in front of a human tester.
 
